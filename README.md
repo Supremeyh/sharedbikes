@@ -9,3 +9,4 @@ npm i axios
 npm i less-loader
 
 ### 暴露webpack配置文件
+npm run eject
