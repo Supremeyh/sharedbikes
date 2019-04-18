@@ -17,7 +17,6 @@ class Header extends Component {
       this.setState({
         systemTime
       })
-      
     }, 1000);
   }
 
@@ -29,7 +28,6 @@ class Header extends Component {
       url: 'http://api.map.baidu.com/telematics/v3/weather?location='+city+'&output=json&ak=' + ak
     })
       .then(res => {
-        console.log(res)
         if(res.status === 'success') {
           const data = res.results[0].weather_data[0]
           this.setState(() => ({

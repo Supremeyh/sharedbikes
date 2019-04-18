@@ -1,5 +1,7 @@
+@import '../../style/varable.less';
+
 .header{
-  // height: 60px;
+  background: @colorWhite;
   .top{
     height: 60px;
     line-height: 60px;
@@ -14,8 +16,22 @@
     line-height: 40px;
     padding: 0 20px;
     border-top: 1px solid #f9c700;
+    background: @bgColorF1;
     .title{
+      position: relative;
       text-align: center;
+      font-size: @font18;
+      &::after{
+        display: block;
+        position: absolute;
+        content: '';
+        left: 50%;
+        bottom: 1px;
+        margin: 0 0 0 -12px;
+        border-top: 9px solid @colorWhite;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+      }
     }
     .weather{
       text-align: right;

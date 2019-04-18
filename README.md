@@ -49,3 +49,18 @@ import { Button } from 'antd'
 
 ```
 
+### CSS3 箭头
+```CSS
+&::after{
+  /* 向下箭头 */
+  display: block;
+  position: absolute;
+  content: '';
+  left: 50%;
+  bottom: 1px;
+  margin: 0 0 0 -12px;
+  border-top: 9px solid @colorWhite;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+}
+```
