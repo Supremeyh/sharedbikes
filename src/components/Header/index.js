@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import { Row, Col } from 'antd'
 import './index.less'
 import Util from '../../util/util'
-import axios from 'axios'
+import Aixos from '../../axios'
 
 class Header extends Component {
   state = {
-    userName: 'Supremeyh'
+    userName: 'Supremeyh',
+    weather: '',
+    dayPictureUrl: ''
   }
   componentWillMount() {
     this.getWeather()
@@ -20,28 +22,45 @@ class Header extends Component {
   }
 
   getWeather() {
-    axios.get('http://api.map.baidu.com/telematics/v3/weather?location=北京&output=json&ak=zf8mf17nBvG5EKZA0wR2TjonTZib7Rv8')
+    let city = encodeURIComponent('北京')
+    // let ak = 'gAInfsvkT2wrwhbWG7obgNvEP7bEW2kf'
+    let ak = '3p49MVra6urFRGOT9s8UBWr2'
+    Aixos.jsonp({
+      url: 'http://api.map.baidu.com/telematics/v3/weather?location='+city+'&output=json&ak=' + ak
+    })
       .then(res => {
         console.log(res)
-        
+        if(res.status === 'success') {
+          const data = res.results[0].weather_data[0]
+          this.setState(() => ({
+            weather: data.weather,
+            dayPictureUrl: data.dayPictureUrl
+          }))
+        }
       })
-    // zf8mf17nBvG5EKZA0wR2TjonTZib7Rv8
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   render() {
+    const { userName, systemTime, weather, dayPictureUrl } = this.state
     return (
       <div className='header'>
         <Row className='top'>
           <Col span={24}>
-            <span>欢迎， {this.state.userName}</span>
+            <span>欢迎， {userName}</span>
             <a href='#'>退出</a>
           </Col>
         </Row>
         <Row className='breadcrumb'>
           <Col span={4} className='title'>首页</Col>
           <Col span={20} className='weather'>
-            <span className='date'>{this.state.systemTime}</span>
-            <span className='detail'>晴转多云</span>
+            <span className='date'>{systemTime}</span>
+            <div className='detail'>
+              <img className='detail-img' src={dayPictureUrl} alt=''/>
+              <span>{weather}</span>
+            </div>
           </Col>
         </Row>
       </div>
