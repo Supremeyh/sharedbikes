@@ -65,10 +65,11 @@ import { Button } from 'antd'
 }
 ```
 
-###  react-router
-npm i react-router-dom --save
+###  路由配置
+npm i react-router-dom
+
 ```JavaScript
-// 切分路由配置, 在路由配置文件引入home组件，home组件{this.props.children}
+// 切分隔离路由配置文件, 在路由配置文件router引入App组件,并在其内部包含Route, App组件只有{this.props.children}
 // src/index
 import Router from './config/router'
 
@@ -77,7 +78,7 @@ ReactDOM.render(<Router />, document.getElementById('root'))
 
 // src/config/router
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import App from '../App'
 import Login from '../pages/login'
 import Admin from '../admin'
@@ -85,10 +86,10 @@ import Button from '../pages/admin/ui/button'
 import Modal from '../pages/admin/ui/modal'
 import NotFound from '../pages/notFound'
 
-class IRouter extends Component {
+class Router extends Component {
   render() {
     return (
-      <Router>
+      <BrowserRouter>
         <App>
           <Route path='/login' component={Login}></Route>
           <Route path='/admin' render={ () => 
@@ -102,18 +103,17 @@ class IRouter extends Component {
             }>
           </Route>
         </App>
-      </Router>
+      </BrowserRouter>
     )
   }
 }
 
-export default IRouter
+export default Router
 
 
 // src/App
 import React, { Component } from 'react'
 import 'antd/dist/antd.css'
-import './App.css'
 
 class App extends Component {
   render() {
@@ -121,10 +121,9 @@ class App extends Component {
       <div className="App">
         {this.props.children}
       </div>
-    );
+    )
   }
 }
 
-export default App;
-
+export default App
 ```
