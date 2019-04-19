@@ -52,7 +52,7 @@ import { Button } from 'antd'
 ### CSS3 箭头
 ```CSS
 &::after{
-  /* 向下箭头 */
+  /* 下三角 向下箭头 */
   display: block;
   position: absolute;
   content: '';
@@ -63,4 +63,68 @@ import { Button } from 'antd'
   border-left: 12px solid transparent;
   border-right: 12px solid transparent;
 }
+```
+
+###  react-router
+npm i react-router-dom --save
+```JavaScript
+// 切分路由配置, 在路由配置文件引入home组件，home组件{this.props.children}
+// src/index
+import Router from './config/router'
+
+ReactDOM.render(<Router />, document.getElementById('root'))
+
+
+// src/config/router
+import React, { Component } from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import App from '../App'
+import Login from '../pages/login'
+import Admin from '../admin'
+import Button from '../pages/admin/ui/button'
+import Modal from '../pages/admin/ui/modal'
+import NotFound from '../pages/notFound'
+
+class IRouter extends Component {
+  render() {
+    return (
+      <Router>
+        <App>
+          <Route path='/login' component={Login}></Route>
+          <Route path='/admin' render={ () => 
+              <Admin>
+                <Switch>
+                  <Route path='/admin/ui/button' component={Button}></Route>
+                  <Route path='/admin/ui/modal' component={Modal}></Route>
+                  <Route component={NotFound}></Route>
+                </Switch>
+              </Admin>
+            }>
+          </Route>
+        </App>
+      </Router>
+    )
+  }
+}
+
+export default IRouter
+
+
+// src/App
+import React, { Component } from 'react'
+import 'antd/dist/antd.css'
+import './App.css'
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        {this.props.children}
+      </div>
+    );
+  }
+}
+
+export default App;
+
 ```

@@ -1,14 +1,12 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from 'react'
 import 'antd/dist/antd.css'
+import './App.css'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <span>react </span>
-        </header>
+        {this.props.children}
       </div>
     );
   }

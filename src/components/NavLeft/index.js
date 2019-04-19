@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import menuConfig from '../../config/menuConfig'
 import { Menu, Icon } from 'antd'
 import './index.less'
+import { NavLink } from 'react-router-dom'
 
 const SubMenu = Menu.SubMenu
 const Item = Menu.Item
@@ -25,7 +26,9 @@ class NavLeft extends Component {
         )
       } else {
         return (
-          <Item key={item.key}>{item.title}</Item>
+          <Item key={item.key}>
+            <NavLink to={item.key}>{item.title}</NavLink>
+          </Item>
         )
       }
     })
