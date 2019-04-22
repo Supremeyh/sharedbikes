@@ -15,7 +15,7 @@ const Util = {
     return date.getFullYear() + '-' + month + '-' + day + ' ' + hour+ ':' + minute + ':' + seconds
   },
   checkGreaterThanTen(num) {
-    return num = num > 10 ? num : '0' + num
+    return num = num < 10 ? '0' + num : num
   }
 }
 
