@@ -14,6 +14,32 @@ const menuConfig = [
       {
         title: '弹框',
         key: '/admin/ui/modal'
+      },
+      {
+        title: '加载',
+        key: '/admin/ui/spin'
+      },
+      {
+        title: '画廊',
+        key: '/admin/ui/gallery'
+      },
+      {
+        title: '轮播图',
+        key: '/admin/ui/carousel'
+      }
+    ]
+  },
+  {
+    title: 'Form',
+    key: '/admin/form',
+    children: [
+      {
+        title: '登录',
+        key: '/admin/form/login'
+      },
+      {
+        title: '注册',
+        key: '/admin/form/register'
       }
     ]
   },
