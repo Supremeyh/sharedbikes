@@ -20,7 +20,28 @@ const formItemLayout = {
   colon: true
 }
 
+const offsetLayout = {
+  wrapperCol: {
+    xs: 24,
+    sm: {
+      span: 12,
+      offset: 4
+    }
+  }
+}
+
 class Register extends Component {
+
+  handleSubmit =() => {
+    let userInfo = this.props.form.getFieldsValue()
+    console.log(JSON.stringify(userInfo))
+    
+    this.props.form.validateFields((err, values) => {
+      if(!err) {
+        message.success('注册成功!')
+      }
+    })
+  }
   
   render() {
     const { getFieldDecorator } = this.props.form
@@ -44,7 +65,7 @@ class Register extends Component {
                 getFieldDecorator('userPwd', {
                   rules: [{required: true, message: '必填'}, {min: 2, max: 10, message: '输入2-10个字符' }]
                 })(
-                  <Input placeholder='password'/>
+                  <Input type='password' placeholder='password'/>
                 )
               }
             </FormItem>
@@ -126,7 +147,8 @@ class Register extends Component {
                 getFieldDecorator('upload', {
 
                 })(
-                  <Upload name='avatar' action='' showUploadList={true}  listType='picture-card'>
+                  <Upload name='avatar' action='//jsonplaceholder.typicode.com/posts/' showUploadList={true}  listType='picture-card'
+                    headers={{'authorization': 'authorization-text'}}>
                     <Button type='primary'>
                       <Icon type='upload' />
                       上传
@@ -134,6 +156,19 @@ class Register extends Component {
                   </Upload>
                 )
               }
+            </FormItem>
+            <FormItem {...offsetLayout}>
+              {
+                getFieldDecorator('protocal', {
+                  valuePropName: 'checked',
+                  initialValue: false
+                })(
+                  <Checkbox>已阅读协议<a hfre='#'>刑法</a></Checkbox>
+                )
+              }
+            </FormItem>
+            <FormItem {...offsetLayout}>
+              <Button type='primary' onClick={this.handleSubmit}>提交</Button>
             </FormItem>
           </Form>
         </Card>
