@@ -20,7 +20,7 @@ class Tables extends Component {
       method: 'get',
       data: {
         params: {
-          page: 1
+          page: this.params.page
         }
       }
     })
