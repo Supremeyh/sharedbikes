@@ -16,6 +16,19 @@ const Util = {
   },
   checkGreaterThanTen(num) {
     return num = num < 10 ? '0' + num : num
+  },
+  pagination(data, cb) {
+    return {
+      onChange: (current) => {
+        cb(current)
+      },
+      pageSize: data.page_size,
+      total: data.total,
+      showTotal: (total) => {
+        return `共${total}页`
+      },
+      showQuickJumper: false
+    }
   }
 }
 

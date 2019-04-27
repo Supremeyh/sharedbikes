@@ -44,6 +44,10 @@ const menuConfig = [
     ]
   },
   {
+    title: 'Table',
+    key: '/admin/table'
+  },
+  {
     title: '权限设置',
     key: '/admin/permission'
   }
