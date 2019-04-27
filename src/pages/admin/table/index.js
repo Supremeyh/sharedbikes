@@ -1,5 +1,5 @@
 import React,{ Component } from 'react'
-import { Table, Tag, Divider, Card } from 'antd'
+import { Table, Tag, Divider, Card, Badge } from 'antd'
 import axios from '../../../axios'
 import Util from '../../../util/util'
 
@@ -8,7 +8,8 @@ class Tables extends Component {
 
   state = {
     selectedRowKeys: [],
-    pagination: {}
+    pagination: {},
+    sortOrder: 'ascend'
   }
 
   params = {
@@ -51,6 +52,11 @@ class Tables extends Component {
   handleTableChange = (pagination, filters, sorter) => {
       console.log(pagination, filters, sorter)
   }
+
+  handleDelete = (text, record, index) => {
+    console.log(text, record, index)
+    
+  }
   
   render() {
 
@@ -59,17 +65,27 @@ class Tables extends Component {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
+        width: 120,
+        fixed: 'left',
+        sorter: (a, b) => {
+          return a.name.length - b.name.length
+        },
         render: text => <a href='javascript:;'>{text}</a>
       },
       {
         title: 'Age',
         dataIndex: 'age',
-        key: 'age'
+        key: 'age',
+        width: 120,
+        sorter: (a, b) => {
+          return a.age - b.age
+        }
       },
       {
         title: 'Sex',
         dataIndex: 'sex',
         key: 'sex',
+        width: 120,
         render(sex) {
           return sex ===1 ? '男' : '女'
         }
@@ -78,11 +94,12 @@ class Tables extends Component {
         title: 'Status',
         dataIndex: 'status',
         key: 'status',
+        width: 120,
         render(status) {
           let config = {
-            '1': '菜鸟',
-            '2': '中级',
-            '3': '大神'
+            '1': <Badge status='success' text='菜鸟'/>,
+            '2': <Badge status='error' text='中级'/>,
+            '3': <Badge status='processing' text='大神'/>,
           }
           return config[status]
         }
@@ -90,12 +107,14 @@ class Tables extends Component {
       {
         title: 'Address',
         dataIndex: 'address',
-        key: 'address'
+        key: 'address',
+        width: 120,
       },
       {
         title: 'Tags',
         dataIndex: 'tags',
         key: 'tags',
+        width: 120,
         render: tags => (
           <span>
             {tags.map((tag) => {
@@ -111,28 +130,27 @@ class Tables extends Component {
       {
         title: 'Actions',
         key: 'action',
-        render: (text, recode) => (
+        render: (text, record) => (
           <span>
-            <a href='javascript:;'>Invite {recode.name}</a>
-            <Divider type='vertical'></Divider>
-            <a href='javascript:;'>Delete</a>
+            <a href='javascript:;'>Invite {record.name}</a>
           </span>
         )
+      },
+      {
+        title: '操作',
+        key: 'handle',
+        render: (text, record, index) => {
+          return <a href='javascript:;' onClick={() => {this.handleDelete(text, record, index)}}>Delete</a>
+        }
       }
     ]
-
-    const rowSelection = {
-      type: 'checkbox',
-      selectedRowKeys: this.state.selectedRowKeys,
-      onChange: this.onSelectChange
-    }
-
     
     return (
       <div className='table'>
         <Card title='Table'>
           <Table 
             bordered
+            scroll={{y: 300}}
             columns={columns} 
             dataSource={this.state.data}
             onChange={this.handleTableChange}
