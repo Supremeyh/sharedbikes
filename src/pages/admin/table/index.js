@@ -7,7 +7,8 @@ import Util from '../../../util/util'
 class Tables extends Component {
 
   state = {
-    selectedRowKeys: []
+    selectedRowKeys: [],
+    pagination: {}
   }
 
   params = {
@@ -15,6 +16,7 @@ class Tables extends Component {
   }
 
   request = () => {
+    let that = this
     axios.request({
       url: 'table_list',
       method: 'get',
@@ -28,8 +30,8 @@ class Tables extends Component {
       this.setState({
         data: res.result.list,
         pagination: Util.pagination(res.result, (current) => {
-          this.params.page = current
-          this.request()
+          that.params.page = current
+          that.request()
         })
       })
     })
@@ -131,11 +133,10 @@ class Tables extends Component {
         <Card title='Table'>
           <Table 
             bordered
-            pagination={this.state.pagination}
             columns={columns} 
             dataSource={this.state.data}
             onChange={this.handleTableChange}
-            >
+            pagination={this.state.pagination}>
           </Table>
         </Card>
       </div>

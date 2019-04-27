@@ -23,6 +23,7 @@ const Util = {
         cb(current)
       },
       pageSize: data.page_size,
+      current: data.page,
       total: data.total,
       showTotal: (total) => {
         return `共${total}页`
