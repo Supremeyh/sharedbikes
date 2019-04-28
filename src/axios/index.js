@@ -20,19 +20,19 @@ class aixos {
       axios({
         url: options.url,
         method: options.method,
-        baseURL: baseUrl,
+        baseURL: options.baseUrl || baseUrl,
         timeout: 5000,
         params: (options.data && options.data.params) || ''
       })
       .then((response) => {
         if(response.status===200) {
           let data = response.data
-          if(data.code === 2000) {
+          if(data.code === 2000 || data.code == 0) {
             resolve(data)
           } else {
             Modal.info({
               title: '提示',
-              content: data.msg
+              content: data.msg || '出错了'
             })
           }
         } else {

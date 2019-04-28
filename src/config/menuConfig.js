@@ -50,6 +50,10 @@ const menuConfig = [
   {
     title: '权限设置',
     key: '/admin/permission'
+  },
+  {
+    title: '城市管理',
+    key: '/admin/city'
   }
 ]
 

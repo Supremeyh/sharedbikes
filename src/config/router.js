@@ -11,6 +11,7 @@ import Carousel from '../pages/admin/ui/carousel'
 import Login from '../pages/admin/form/login'
 import Register from '../pages/admin/form/register'
 import Table from '../pages/admin/table'
+import City from '../pages/city'
 import NotFound from '../pages/notFound'
 
 class IRouter extends Component {
@@ -30,6 +31,7 @@ class IRouter extends Component {
                   <Route path='/admin/form/login' component={Login}></Route>
                   <Route path='/admin/form/register' component={Register}></Route>
                   <Route path='/admin/table' component={Table}></Route>
+                  <Route path='/admin/city' component={City}></Route>
                   <Route component={NotFound}></Route>
                 </Switch>
               </Admin>
