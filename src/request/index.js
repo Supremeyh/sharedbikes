@@ -2,7 +2,9 @@ import JsonP from 'jsonp'
 import axios from 'axios'
 import { Modal } from 'antd'
 
-class aixos {
+const Axios = axios
+
+class request {
   static jsonp(options) {
     return new Promise((resolve, reject) => {
       JsonP(options.url, {
@@ -14,15 +16,16 @@ class aixos {
     })
   }
 
-  static request(options) {
+  static axios(options) {
     let baseUrl = 'https://easy-mock.com/mock/5cc4000e429a6a46aa5d5112/sharedbikes/'
     return new Promise((resolve, reject) => {
-      axios({
+      Axios({
+        baseURL: options.baseUrl || baseUrl,
         url: options.url,
         method: options.method,
-        baseURL: options.baseUrl || baseUrl,
-        timeout: 5000,
-        params: (options.data && options.data.params) || ''
+        params: options.params || '',
+        data: options.data || '',
+        timeout: 5000
       })
       .then((response) => {
         if(response.status===200) {
@@ -43,4 +46,4 @@ class aixos {
   }
 }
 
-export default aixos
+export default request

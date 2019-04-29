@@ -35,7 +35,7 @@ class Register extends Component {
   handleSubmit =() => {
     let userInfo = this.props.form.getFieldsValue()
     console.log(JSON.stringify(userInfo))
-    
+
     this.props.form.validateFields((err, values) => {
       if(!err) {
         message.success('注册成功!')

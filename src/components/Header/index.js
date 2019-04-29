@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Row, Col } from 'antd'
 import './index.less'
 import Util from '../../util/util'
-import Aixos from '../../axios'
+import request from '../../request'
 
 class Header extends Component {
   state = {
@@ -24,7 +24,7 @@ class Header extends Component {
     let city = encodeURIComponent('北京')
     // let ak = 'gAInfsvkT2wrwhbWG7obgNvEP7bEW2kf'
     let ak = '3p49MVra6urFRGOT9s8UBWr2'
-    Aixos.jsonp({
+    request.jsonp({
       url: 'http://api.map.baidu.com/telematics/v3/weather?location='+city+'&output=json&ak=' + ak
     })
       .then(res => {

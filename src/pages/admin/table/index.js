@@ -1,6 +1,6 @@
 import React,{ Component } from 'react'
 import { Table, Tag, Divider, Card, Badge } from 'antd'
-import axios from '../../../axios'
+import request from '../../../request'
 import Util from '../../../util/util'
 
 
@@ -16,15 +16,13 @@ class Tables extends Component {
     page: 1
   }
 
-  request = () => {
+  getTableList = () => {
     let that = this
-    axios.request({
+    request.axios({
       url: 'table_list',
       method: 'get',
-      data: {
-        params: {
-          page: this.params.page
-        }
+      params: {
+        page: this.params.page
       }
     })
     .then((res) => {
@@ -32,7 +30,7 @@ class Tables extends Component {
         data: res.result.list,
         pagination: Util.pagination(res.result, (current) => {
           that.params.page = current
-          that.request()
+          that.getTableList()
         })
       })
     })
@@ -40,7 +38,7 @@ class Tables extends Component {
   }
 
   componentDidMount() {
-    this.request()
+    this.getTableList()
   }
 
   onSelectChange = (selectedRowKeys) => {

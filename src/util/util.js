@@ -3,7 +3,7 @@ const Util = {
     if(!time) return
     let date = new Date(time)
     let month = date.getMonth() + 1
-    let day = date.getDay()
+    let day = date.getDate()
     let hour = date.getHours()
     let minute = date.getMinutes()
     let seconds = date.getSeconds()
