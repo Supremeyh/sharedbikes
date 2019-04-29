@@ -48,12 +48,16 @@ const menuConfig = [
     key: '/admin/table'
   },
   {
-    title: '权限设置',
-    key: '/admin/permission'
-  },
-  {
     title: '城市管理',
     key: '/admin/city'
+  },
+  {
+    title: '订单管理',
+    key: '/admin/order'
+  },
+  {
+    title: '权限设置',
+    key: '/admin/permission'
   }
 ]
 
