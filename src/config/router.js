@@ -1,18 +1,20 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import App from '../App'
-// import Login from '../pages/login'
+import Login from '../pages/login'
 import Admin from '../admin'
 import Button from '../pages/admin/ui/button'
 import Modal from '../pages/admin/ui/modal'
 import Spin from '../pages/admin/ui/spin'
 import Gallery from '../pages/admin/ui/gallery'
 import Carousel from '../pages/admin/ui/carousel'
-import Login from '../pages/admin/form/login'
+import LoginForm from '../pages/admin/form/login'
 import Register from '../pages/admin/form/register'
 import Table from '../pages/admin/table'
 import City from '../pages/city'
 import Order from '../pages/order'
+import Common from '../common'
+import OrderDetail from '../pages/order/detail'
 import NotFound from '../pages/notFound'
 
 class IRouter extends Component {
@@ -29,7 +31,7 @@ class IRouter extends Component {
                   <Route path='/admin/ui/spin' component={Spin}></Route>
                   <Route path='/admin/ui/gallery' component={Gallery}></Route>
                   <Route path='/admin/ui/carousel' component={Carousel}></Route>
-                  <Route path='/admin/form/login' component={Login}></Route>
+                  <Route path='/admin/form/login' component={LoginForm}></Route>
                   <Route path='/admin/form/register' component={Register}></Route>
                   <Route path='/admin/table' component={Table}></Route>
                   <Route path='/admin/city' component={City}></Route>
@@ -38,6 +40,12 @@ class IRouter extends Component {
                 </Switch>
               </Admin>
             }>
+          </Route>
+          <Route path='/common' render={() => 
+            <Common>
+              <Route path='/common/order/detail/:orderId' component={OrderDetail}></Route>
+            </Common>
+          }>
           </Route>
         </App>
       </Router>

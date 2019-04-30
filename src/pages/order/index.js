@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
-import { Card, Button, Table, Form, Select, Modal, message, DatePicker } from 'antd';
-import request from '../../request';
-import Utils from '../../util/util';
-const FormItem = Form.Item;
-const Option = Select.Option;
+import { Card, Button, Table, Form, Select, Modal, message, DatePicker } from 'antd'
+import request from '../../request'
+import Utils from '../../util/util'
+const FormItem = Form.Item
+const Option = Select.Option
 
 
 class Order extends Component {
   state = {
-    list: []
+    list: [],
+    selectedRowKeys: '',
+    selectedRowItem: {} 
   }
 
   params = {
@@ -41,6 +43,29 @@ class Order extends Component {
         })
       })
     })
+  }
+
+  onSelectChange = (selectedRowKeys, selectedRows) => {
+    this.setState({ selectedRowKeys, selectedRowItem: selectedRows[0]})
+  }
+
+  onRowClick = (record, index) => {
+    console.log(record, index)
+    this.setState({
+      selectedRowKeys: [index],
+      selectedRowItem: record
+    })
+  }
+
+  redirectToOrderDetail = () => {
+    let orderInfo = this.state.selectedRowItem
+    console.log(orderInfo)
+    
+    if(!orderInfo.id) {
+      Modal.info({title: '提示', content: '请选择一条订单'})
+      return
+    }
+    window.open(`/common/order/detail/${orderInfo.id}`, '_blank')
   }
 
   render() {
@@ -90,13 +115,21 @@ class Order extends Component {
         dataIndex: 'user_pay'
       }
     ]
+
+    const rowSelection = {
+      type: 'radio',
+      selectedRowKeys: this.state.selectedRowKeys,
+      onChange: this.onSelectChange
+    }
+
+
     return (
       <div className='order'>
         <Card>
           <FilterFormWrap />
         </Card>
         <Card>
-          <Button type='primary'>订单详情</Button>
+          <Button type='primary' onClick={this.redirectToOrderDetail}>订单详情</Button>
           <Button type='primary'>结束订单</Button>
         </Card>
         <Card title='Order'>
@@ -104,7 +137,9 @@ class Order extends Component {
             bordered
             columns={columns}
             dataSource={this.state.list}
-            pagination={this.state.pagination}>
+            pagination={this.state.pagination}
+            rowSelection={rowSelection}
+            >
           </Table>
         </Card>
       </div>
