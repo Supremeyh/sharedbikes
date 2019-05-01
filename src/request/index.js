@@ -39,11 +39,16 @@ class request {
     })
   }
 
-  static axios(options) {
-    let baseUrl = 'https://easy-mock.com/mock/5cc4000e429a6a46aa5d5112/sharedbikes/'
+  static axios(options, isMock=true) {
+    let baseUrl = ''
+    if(isMock===true) {
+      baseUrl = 'https://easy-mock.com/mock/5cc4000e429a6a46aa5d5112/sharedbikes/'
+    } else {
+      baseUrl = 'http://remote/host/'
+    }
     return new Promise((resolve, reject) => {
       Axios({
-        baseURL: options.baseUrl || baseUrl,
+        baseURL: baseUrl,
         url: options.url,
         method: options.method || 'get',
         params: options.params || '',
@@ -53,7 +58,7 @@ class request {
       .then((response) => {
         if(response.status===200) {
           let data = response.data
-          if(data.code === 2000 || data.code == 0) {
+          if(data.code === 2000) {
             resolve(data)
           } else {
             Modal.info({
