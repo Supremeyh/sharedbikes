@@ -45,27 +45,8 @@ class Order extends Component {
   }
 
   getOrderList = () => {
-    request.axios({
-      url: 'order_list',
-      method: 'get',
-      params: {
-        params: this.params 
-      }
-    }).then(res => {
-      console.log(res)
-      
-      const list = res.result.item_list
-      list.map((item) => {
-        item.key =item.id
-        return item
-      })
-      this.setState({
-        list,
-        pagination: Utils.pagination(res.result, (current) => {
-          this.params.page = current
-        })
-      })
-    })
+    let _this = this
+    request.requestList(_this, 'order_list', _this.params, this.getOrderList)
   }
 
   onSelectChange = (selectedRowKeys, selectedRows) => {

@@ -1,7 +1,7 @@
 import React,{ Component } from 'react'
-import { Table, Tag, Divider, Card, Badge } from 'antd'
+import { Table, Tag, Card, Badge } from 'antd'
 import request from '../../../request'
-import Util from '../../../util/util'
+import Utils from '../../../util/util'
 
 
 class Tables extends Component {
@@ -28,7 +28,7 @@ class Tables extends Component {
     .then((res) => {
       this.setState({
         data: res.result.list,
-        pagination: Util.pagination(res.result, (current) => {
+        pagination: Utils.pagination(res.result, (current) => {
           that.params.page = current
           that.getTableList()
         })

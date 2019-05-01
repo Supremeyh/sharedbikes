@@ -3,7 +3,7 @@ import { Select } from 'antd'
 
 const Option = Select.Option
 
-const Util = {
+const Utils = {
   formatDate(time) {
     if(!time) return
     let date = new Date(time)
@@ -46,4 +46,4 @@ const Util = {
   }
 }
 
-export default Util
+export default Utils

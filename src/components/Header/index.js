@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { Row, Col, Icon } from 'antd'
 import './index.less'
-import Util from '../../util/util'
+import Utils from '../../util/util'
 import request from '../../request'
 
 class Header extends Component {
@@ -13,7 +13,7 @@ class Header extends Component {
   componentWillMount() {
     this.getWeather()
     setInterval(() => {
-      let systemTime = Util.formatDate(new Date().getTime())
+      let systemTime = Utils.formatDate(new Date().getTime())
       this.setState({
         systemTime
       })

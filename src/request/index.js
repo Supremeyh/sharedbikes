@@ -1,6 +1,7 @@
 import JsonP from 'jsonp'
 import axios from 'axios'
 import { Modal } from 'antd'
+import Utils from '../util/util'
 
 const Axios = axios
 
@@ -16,13 +17,35 @@ class request {
     })
   }
 
+  static requestList(that, url, params, cb) {
+    this.axios({
+      url,
+      params
+    }).then(res => {
+      if(res && res.result) {
+        const list = res.result.item_list
+        list.map((item) => {
+          item.key =item.id
+          return item
+        })
+        that.setState({
+          list,
+          pagination: Utils.pagination(res.result, (current) => {
+            that.params.page = current
+            cb()
+          })
+        })
+      }
+    })
+  }
+
   static axios(options) {
     let baseUrl = 'https://easy-mock.com/mock/5cc4000e429a6a46aa5d5112/sharedbikes/'
     return new Promise((resolve, reject) => {
       Axios({
         baseURL: options.baseUrl || baseUrl,
         url: options.url,
-        method: options.method,
+        method: options.method || 'get',
         params: options.params || '',
         data: options.data || '',
         timeout: 5000

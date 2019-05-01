@@ -1,9 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import { Input, Icon, Button, Select, Checkbox, Radio, Form, DatePicker } from 'antd'
-import Util from '../../util/util'
+import Utils from '../../util/util'
 
 const FormItem = Form.Item
-const Option = Select.Option
 
 class BaseForm extends Component {
   state = {
@@ -57,7 +56,7 @@ class BaseForm extends Component {
                     style={{width: width}}
                     placeholder={placeholder}>
                       {
-                        Util.getOptionList(item.list)
+                        Utils.getOptionList(item.list)
                       }
                   </Select>
                 )
