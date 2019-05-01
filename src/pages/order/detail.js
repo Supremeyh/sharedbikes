@@ -26,10 +26,85 @@ class OrderDetail extends Component {
         orderId: orderId
       }
     }).then(res => {
+      this.renderMap(res.result)
       this.setState({
         orderInfo: res.result
       })
     })
+  }
+
+  renderMap = (result) => {
+    this.map = new window.BMap.Map('orderDetailMap')
+    this.map.enableScrollWheelZoom(true)
+    this.map.addControl(new window.BMap.NavigationControl())
+    this.addMapControl()
+    this.drawBikeRoute(result.position_list)
+    this.drawServiceArea(result.area)
+  }
+
+  addMapControl = () => {
+    let map = this.map    
+    map.addControl(new window.BMap.ScaleControl())
+    map.addControl(new window.BMap.NavigationControl())
+    map.addControl(new window.BMap.ScaleControl())
+    map.addControl(new window.BMap.OverviewMapControl())
+    map.addControl(new window.BMap.MapTypeControl())
+    map.setCurrentCity("北京")
+  }
+
+  drawBikeRoute = (positionList) => {
+    let map = this.map
+    let startPoint = ''
+    let endPoint = ''
+    if(positionList.length > 0) {
+      let first = positionList[0]
+      let last = positionList[positionList.length-1]
+      startPoint = new window.BMap.Point(first.lon, first.lat)
+      endPoint = new window.BMap.Point(last.lon, last.lat)
+      let startIcon = new window.BMap.Icon('/assets/images/start_point.png', new window.BMap.Size(36, 42), {
+        imageSize: new window.BMap.Size(36, 42),
+        anchor: new window.BMap.Size(36, 42)
+      })
+      let endIcon = new window.BMap.Icon('/assets/images/end_point.png', new window.BMap.Size(36, 42), {
+        imageSize: new window.BMap.Size(36, 42),
+        anchor: new window.BMap.Size(36, 42)
+      })
+      let startMarker = new window.BMap.Marker(startPoint, { icon: startIcon })
+      let endMarker = new window.BMap.Marker(endPoint, { icon: endIcon })
+      map.addOverlay(startMarker)
+      map.addOverlay(endMarker)
+
+      let trackPoint = []
+      for(let i=0; i<positionList.length; i++) {
+        let point = positionList[i]
+        trackPoint.push(new window.BMap.Point(point.lon, point.lat))
+      }
+      let polyline = new window.BMap.Polyline(trackPoint, {
+        strokeColor: 'blue',
+        strokeWeight: 2,
+        strokeOpacity: 0.8
+      })
+      map.addOverlay(polyline)
+      this.map.centerAndZoom(startPoint, 12)
+    }
+  }
+
+  drawServiceArea = (positionList) => {
+    let map = this.map
+    let trackPoint = []
+    for(let i=0; i<positionList.length; i++) {
+      let point = positionList[i]
+      trackPoint.push(new window.BMap.Point(point.lon, point.lat))
+    }
+
+    let polygon = new window.BMap.Polygon(trackPoint, {
+      strokeColor: 'red',
+      strokeWeight: 2,
+      strokeOpacity: 0.8,
+      fillColor: '#ff8605',
+      fillOpacity: 0.3
+    })
+    map.addOverlay(polygon)
   }
 
   render() {
@@ -37,7 +112,7 @@ class OrderDetail extends Component {
     return (
       <div className='detail'>
         <Card>
-          <div id='orderDetailMap'></div>
+          <div id='orderDetailMap' className='order-map'></div>
           <div className='detail-items'>
             <div className='item-title'>基础信息</div>
             <ul className='detail-form'>
