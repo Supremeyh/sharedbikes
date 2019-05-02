@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Card, Button, Table, Modal } from 'antd'
 import BaseForm from '../../components/BaseForm'
 import request from '../../request'
-import Utils from '../../util/util'
 
 
 class Order extends Component {

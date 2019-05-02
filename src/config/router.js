@@ -15,6 +15,7 @@ import City from '../pages/city'
 import Order from '../pages/order'
 import Common from '../common'
 import OrderDetail from '../pages/order/detail'
+import User from '../pages/user'
 import NotFound from '../pages/notFound'
 
 class IRouter extends Component {
@@ -36,6 +37,7 @@ class IRouter extends Component {
                   <Route path='/admin/table' component={Table}></Route>
                   <Route path='/admin/city' component={City}></Route>
                   <Route path='/admin/order' component={Order}></Route>
+                  <Route path='/admin/user' component={User}></Route>
                   <Route component={NotFound}></Route>
                 </Switch>
               </Admin>

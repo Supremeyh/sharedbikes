@@ -56,6 +56,10 @@ const menuConfig = [
     key: '/admin/order'
   },
   {
+    title: '用户管理',
+    key: '/admin/user'
+  },
+  {
     title: '权限设置',
     key: '/admin/permission'
   }
