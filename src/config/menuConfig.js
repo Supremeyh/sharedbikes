@@ -64,6 +64,14 @@ const menuConfig = [
     key: '/admin/bikemap'
   },
   {
+    title: '柱形图',
+    key: '/admin/bar'
+  },
+  {
+    title: '饼状图',
+    key: '/admin/pie'
+  },
+  {
     title: '权限设置',
     key: '/admin/permission'
   }
