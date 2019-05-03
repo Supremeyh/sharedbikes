@@ -72,6 +72,10 @@ const menuConfig = [
     key: '/admin/pie'
   },
   {
+    title: '富文本',
+    key: '/admin/richtext'
+  },
+  {
     title: '权限设置',
     key: '/admin/permission'
   }
