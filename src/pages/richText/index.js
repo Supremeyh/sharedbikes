@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Card, Button, Modal } from 'antd'
-import { Editor, convertToRaw, ContentState } from 'react-draft-wysiwyg'
+import { Editor } from 'react-draft-wysiwyg'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import draftToHtml from 'draftjs-to-html'
 
