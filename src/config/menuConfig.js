@@ -60,6 +60,10 @@ const menuConfig = [
     key: '/admin/user'
   },
   {
+    title: '车辆地图',
+    key: '/admin/bikemap'
+  },
+  {
     title: '权限设置',
     key: '/admin/permission'
   }
