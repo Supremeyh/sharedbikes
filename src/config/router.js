@@ -20,6 +20,7 @@ import User from '../pages/user'
 import Bar from '../pages/echarts/bar'
 import Pie from '../pages/echarts/pie'
 import RichText from '../pages/richText'
+import Permission from '../pages/permission'
 import NotFound from '../pages/notFound'
 
 class IRouter extends Component {
@@ -46,6 +47,7 @@ class IRouter extends Component {
                   <Route path='/admin/bar' component={Bar}></Route>
                   <Route path='/admin/pie' component={Pie}></Route>
                   <Route path='/admin/richtext' component={RichText}></Route>
+                  <Route path='/admin/permission' component={Permission}></Route>
                   <Route component={NotFound}></Route>
                 </Switch>
               </Admin>

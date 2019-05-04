@@ -279,12 +279,12 @@ class UserForm extends Component {
     return sex===1 ? '男' : '女'
   }
 
-  mapInterest = (interest) => {
+  mapState = (state) => {
     return {
       '1': '菜鸟',
       '2': '大神',
       '3': '骨灰'
-    }[interest]
+    }[state]
   }
 
   render() {
@@ -323,7 +323,7 @@ class UserForm extends Component {
         </FormItem>
         <FormItem label='状态'>
           {
-            type==='detail' ? this.mapInterest(userInfo.state) :
+            type==='detail' ? this.mapState(userInfo.state) :
             getFieldDecorator('state', {
               initialValue: userInfo.state
             })(
