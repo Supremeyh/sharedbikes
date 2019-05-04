@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Button, Table, Modal, Form, Input, Select, message, Tree } from 'antd'
+import { Card, Button, Table, Modal, Form, Input, Select, message, Tree, Transfer, Switch } from 'antd'
 import request from '../../request'
 import Utils from '../../util/util'
 import menuConfig from '../../config/menuConfig'
@@ -17,6 +17,7 @@ class Permission extends Component {
     selectedRowItem: {},
     isCreateRoleVisible: false,
     isSetPermissionVisble: false,
+    isRoleAuthVisible: false,
   }
 
   params = {
@@ -55,6 +56,58 @@ class Permission extends Component {
       isSetPermissionVisble: true,
       detailInfo: item,
       menuInfo: item.menus
+    })
+  }
+  
+  handleRoleAuth = () => {
+    let item = this.state.selectedRowItem
+    if(!item.id) {
+      Modal.info({
+        title: '提示',
+        content: '请选择角色'
+      })
+      return
+    }
+    this.getRoleUserList(item.id)
+    this.setState({
+      isRoleAuthVisible: true,
+      detailInfo: item
+    })
+  }
+
+  getRoleUserList = (userId) => {
+    request.axios({
+      url: 'role/user_list',
+      methods: 'get',
+      params: userId
+    }).then(res => {
+      this.setState({
+        isRoleAuthVisible: true
+      })
+      this.getAuthUserList(res.result)
+    })
+  }
+
+  getAuthUserList = (dataSource) => {
+    const mockData = []
+    const targetKeys = []
+    if(dataSource && dataSource.length > 0) {
+      for (let i = 0; i < dataSource.length; i++) {
+        const data = {
+          key: dataSource[i].user_id,
+          title: dataSource[i].user_name,
+          description: dataSource[i].user_name,
+          status: dataSource[i].status
+        }
+        mockData.push(data)
+        if(data.status===1) {
+          targetKeys.push(data.key)
+        }
+      }
+    }
+    this.setState({
+      mockData,
+      targetKeys
     })
   }
 
@@ -102,9 +155,36 @@ class Permission extends Component {
     })
   }
 
+  handleRoleAuthSubmit = () => {
+    let data = {}
+    data.user_ids = this.state.targetKeys
+    data.role_id = this.state.selectedRowItem.id
+    request.axios({
+      url: 'role/user_role_edit',
+      method: 'post',
+      data
+    }).then(res => {
+      message.success('修改成功!')
+      this.handleRoleAuthCancel()
+      this.getPermissionUser()
+    })
+  }
+  
+  handleRoleAuthCancel = () => {
+    this.setState({
+      isRoleAuthVisible: false
+    })
+  }
+
   handlePatchMenuInfo = (menus) => {
     this.setState({
       menuInfo: menus
+    })
+  }
+
+  handleTargetKeysTransfer = (targetKeys) => {
+    this.setState({
+      targetKeys
     })
   }
 
@@ -158,7 +238,7 @@ class Permission extends Component {
         <Card>
           <Button type='primary' onClick={this.handleCreateRole}>创建角色</Button>
           <Button type='primary' onClick={this.handlePermission}>设置权限</Button>
-          <Button type='primary' onClick={this.handleCreateRole}>用户授权</Button>
+          <Button type='primary' onClick={this.handleRoleAuth}>用户授权</Button>
         </Card>
         <Card>
           <Table 
@@ -195,6 +275,21 @@ class Permission extends Component {
               wrappedComponentRef={(form) => this.permForm= form}
               >
             </PermissionFormWrap>
+        </Modal>
+        <Modal
+          title='选择角色'
+          width={600}
+          visible={this.state.isRoleAuthVisible}
+          onOk={this.handleRoleAuthSubmit}
+          onCancel={this.handleRoleAuthCancel}
+        >
+          <AuthFormWrap
+            mockData={this.state.mockData}
+            targetKeys={this.state.targetKeys}
+            selectedKeys={this.state.selectedKeys}
+            targetKeysTransfer={this.handleTargetKeysTransfer}
+            currentRole={this.state.selectedRowItem} 
+          /> 
         </Modal>
       </div>
     )
@@ -262,11 +357,10 @@ class PermissionForm extends Component {
   }
 
   onTreeSelect = (selectedKeys, info) => {
-    console.log('selected', selectedKeys, info);
+    // console.log('selected', selectedKeys, info);
   }
 
   onTreeCheck = (checkedKeys, info) => {
-    console.log('onCheck', checkedKeys, info);
     this.props.patchMenuInfo(checkedKeys)
   }
 
@@ -317,3 +411,52 @@ class PermissionForm extends Component {
 }
 
 const PermissionFormWrap = Form.create({})(PermissionForm)
+
+
+class AuthForm extends Component {
+
+  filterOption = (inputValue, option) => option.description.indexOf(inputValue) > -1
+
+  handleChange = (targetKeys, direction, moveKeys) => {
+    this.props.targetKeysTransfer(targetKeys)
+  }
+
+  render() {
+    const { mockData, targetKeys, selectedKeys, currentRole } = this.props    
+    const { getFieldDecorator } = this.props.form
+    const formItemLayout = {
+      labelCol: {span: 4},
+      wrapperCol: {span: 20},
+    }
+
+    return (
+      <Form layout='horizontal' {...formItemLayout}>
+        <FormItem label='角色名称'>
+          {
+            getFieldDecorator('role_name', {
+              initialValue: currentRole.role_name
+            })(
+              <Input text='text' disabled placeholder='角色名称'/>
+            )
+          }
+        </FormItem>
+        <FormItem label='选择角色'>
+          <Transfer
+            titles={['待选用户', '已选用户']}
+            listStyle={{width: 200, height: 300}}
+            dataSource={mockData}
+            targetKeys={targetKeys}
+            selectedKeys={selectedKeys}
+            showSearch
+            filterOption={this.filterOption}
+            onChange={this.handleChange}
+            onScroll={this.handleScroll}
+            render={item => item.title}
+          />
+        </FormItem>
+      </Form>
+    )
+  }
+}
+
+const AuthFormWrap = Form.create({})(AuthForm)
