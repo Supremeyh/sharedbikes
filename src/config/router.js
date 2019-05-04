@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import App from '../App'
 import Login from '../pages/login'
+import Home from '../pages/home'
 import Admin from '../admin'
 import Button from '../pages/admin/ui/button'
 import Modal from '../pages/admin/ui/modal'
@@ -28,37 +29,41 @@ class IRouter extends Component {
     return (
       <Router>
         <App>
-          <Route path='/login' component={Login}></Route>
-          <Route path='/admin' render={ () => 
-              <Admin>
-                <Switch>
-                  <Route path='/admin/ui/button' component={Button}></Route>
-                  <Route path='/admin/ui/modal' component={Modal}></Route>
-                  <Route path='/admin/ui/spin' component={Spin}></Route>
-                  <Route path='/admin/ui/gallery' component={Gallery}></Route>
-                  <Route path='/admin/ui/carousel' component={Carousel}></Route>
-                  <Route path='/admin/form/login' component={LoginForm}></Route>
-                  <Route path='/admin/form/register' component={Register}></Route>
-                  <Route path='/admin/table' component={Table}></Route>
-                  <Route path='/admin/city' component={City}></Route>
-                  <Route path='/admin/order' component={Order}></Route>
-                  <Route path='/admin/user' component={User}></Route>
-                  <Route path='/admin/bikemap' component={BikeMap}></Route>
-                  <Route path='/admin/bar' component={Bar}></Route>
-                  <Route path='/admin/pie' component={Pie}></Route>
-                  <Route path='/admin/richtext' component={RichText}></Route>
-                  <Route path='/admin/permission' component={Permission}></Route>
-                  <Route component={NotFound}></Route>
-                </Switch>
-              </Admin>
+          <Switch>
+            <Route path='/login' component={Login}></Route>
+            <Route path='/common' render={() => 
+              <Common>
+                <Route path='/common/order/detail/:orderId' component={OrderDetail}></Route>
+              </Common>
             }>
-          </Route>
-          <Route path='/common' render={() => 
-            <Common>
-              <Route path='/common/order/detail/:orderId' component={OrderDetail}></Route>
-            </Common>
-          }>
-          </Route>
+            </Route>
+            <Route path='/' render={ () => 
+                <Admin>
+                  <Switch>
+                    <Route path='/home' component={Home}></Route>
+                    <Route path='/ui/button' component={Button}></Route>
+                    <Route path='/ui/modal' component={Modal}></Route>
+                    <Route path='/ui/spin' component={Spin}></Route>
+                    <Route path='/ui/gallery' component={Gallery}></Route>
+                    <Route path='/ui/carousel' component={Carousel}></Route>
+                    <Route path='/form/login' component={LoginForm}></Route>
+                    <Route path='/form/register' component={Register}></Route>
+                    <Route path='/table' component={Table}></Route>
+                    <Route path='/city' component={City}></Route>
+                    <Route path='/order' component={Order}></Route>
+                    <Route path='/user' component={User}></Route>
+                    <Route path='/bikemap' component={BikeMap}></Route>
+                    <Route path='/bar' component={Bar}></Route>
+                    <Route path='/pie' component={Pie}></Route>
+                    <Route path='/richtext' component={RichText}></Route>
+                    <Route path='/permission' component={Permission}></Route>
+                    <Redirect to='/home'></Redirect>
+                    <Route component={NotFound}></Route>
+                  </Switch>
+                </Admin>
+              }>
+            </Route>
+          </Switch>
         </App>
       </Router>
     )

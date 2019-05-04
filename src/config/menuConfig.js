@@ -1,83 +1,83 @@
 const menuConfig = [
   {
     title: '首页',
-    key: '/admin/home'
+    key: '/home'
   },
   {
     title: 'UI',
-    key: '/admin/ui',
+    key: '/ui',
     children: [
       {
         title: '按钮',
-        key: '/admin/ui/button'
+        key: '/ui/button'
       },
       {
         title: '弹框',
-        key: '/admin/ui/modal'
+        key: '/ui/modal'
       },
       {
         title: '加载',
-        key: '/admin/ui/spin'
+        key: '/ui/spin'
       },
       {
         title: '画廊',
-        key: '/admin/ui/gallery'
+        key: '/ui/gallery'
       },
       {
         title: '轮播图',
-        key: '/admin/ui/carousel'
+        key: '/ui/carousel'
       }
     ]
   },
   {
     title: 'Form',
-    key: '/admin/form',
+    key: '/form',
     children: [
       {
         title: '登录',
-        key: '/admin/form/login'
+        key: '/form/login'
       },
       {
         title: '注册',
-        key: '/admin/form/register'
+        key: '/form/register'
       }
     ]
   },
   {
     title: 'Table',
-    key: '/admin/table'
+    key: '/table'
   },
   {
     title: '城市管理',
-    key: '/admin/city'
+    key: '/city'
   },
   {
     title: '订单管理',
-    key: '/admin/order'
+    key: '/order'
   },
   {
     title: '用户管理',
-    key: '/admin/user'
+    key: '/user'
   },
   {
     title: '车辆地图',
-    key: '/admin/bikemap'
+    key: '/bikemap'
   },
   {
     title: '柱形图',
-    key: '/admin/bar'
+    key: '/bar'
   },
   {
     title: '饼状图',
-    key: '/admin/pie'
+    key: '/pie'
   },
   {
     title: '富文本',
-    key: '/admin/richtext'
+    key: '/richtext'
   },
   {
     title: '权限设置',
-    key: '/admin/permission'
+    key: '/permission'
   }
 ]
 
