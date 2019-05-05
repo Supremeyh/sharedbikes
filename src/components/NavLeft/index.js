@@ -65,6 +65,7 @@ class NavLeft extends Component {
           defaultSelectedKeys={defaultSelectedKeys} 
           defaultOpenKeys={defaultOpenKeys} 
           onClick={this.handleClick}
+          style={{textAlign: 'left'}}
           >
           {this.state.menuTree}
         </Menu>
