@@ -1,8 +1,9 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { Row, Col, Icon } from 'antd'
 import './index.less'
 import Utils from '../../util/util'
 import request from '../../request'
+import { connect } from 'react-redux'
 
 class Header extends Component {
   state = {
@@ -43,7 +44,7 @@ class Header extends Component {
 
   render() {
     const { userName, systemTime, weather, dayPictureUrl } = this.state
-    const { menuType } = this.props
+    const { menuType, menuName } = this.props
     return (
       <div className='header'>
         <Row className='top'>
@@ -65,7 +66,7 @@ class Header extends Component {
         {
           menuType ? null : (
             <Row className='breadcrumb'>
-              <Col span={4} className='title'>首页</Col>
+              <Col span={4} className='title'>{menuName}</Col>
               <Col span={20} className='weather'>
                 <span className='date'>{systemTime}</span>
                 <div className='detail'>
@@ -81,4 +82,10 @@ class Header extends Component {
   }
 }
 
-export default Header
+const mapStateToProps = (state) => {
+  return {
+    menuName: state.menuName
+  }
+}
+
+export default connect(mapStateToProps, null)(Header)

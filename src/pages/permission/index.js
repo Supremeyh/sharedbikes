@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Button, Table, Modal, Form, Input, Select, message, Tree, Transfer, Switch } from 'antd'
+import { Card, Button, Table, Modal, Form, Input, Select, message, Tree, Transfer } from 'antd'
 import request from '../../request'
 import Utils from '../../util/util'
 import menuConfig from '../../config/menuConfig'
