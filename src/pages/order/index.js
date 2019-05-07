@@ -62,7 +62,6 @@ class Order extends Component {
 
   redirectToOrderDetail = () => {
     let orderInfo = this.state.selectedRowItem
-    console.log(orderInfo)
     
     if(!orderInfo.id) {
       Modal.info({title: '提示', content: '请选择一条订单'})
